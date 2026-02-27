@@ -20,6 +20,10 @@ services:
     networks:
       - app
     logging: *default-logging
+    deploy:
+      resources:
+        limits:
+          memory: 64m
 
   grafana:
     image: grafana/grafana:11.0.0
@@ -38,6 +42,10 @@ services:
     networks:
       - app
     logging: *default-logging
+    deploy:
+      resources:
+        limits:
+          memory: 256m
 
   loki:
     image: grafana/loki:3.0.0
@@ -50,6 +58,10 @@ services:
     networks:
       - app
     logging: *default-logging
+    deploy:
+      resources:
+        limits:
+          memory: 512m
 
   promtail:
     image:  grafana/promtail:3.0.0
@@ -64,6 +76,10 @@ services:
     networks:
       - app
     logging: *default-logging
+    deploy:
+      resources:
+        limits:
+          memory: 128m
 
   prometheus:
     image: prom/prometheus:v2.53.0
@@ -78,16 +94,10 @@ services:
     networks:
       - app
     logging: *default-logging
-
-  log-generator:
-    image: us-docker.pkg.dev/grafanalabs-global/docker-explore-logs-prod/fake-log-generator:latest
-    container_name: log-generator
-    command: -url http://loki:3100/loki/api/v1/push
-    depends_on:
-      - loki
-    networks:
-      - app
-    logging: *default-logging
+    deploy:
+      resources:
+        limits:
+          memory: 256m
 
 networks:
   app:
