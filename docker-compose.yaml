@@ -99,7 +99,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 256m
+          memory: 512m
 
   node-exporter:
     image: prom/node-exporter:v1.8.0
