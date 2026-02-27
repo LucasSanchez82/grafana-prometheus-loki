@@ -99,6 +99,25 @@ services:
         limits:
           memory: 256m
 
+  node-exporter:
+    image: prom/node-exporter:v1.8.0
+    container_name: node-exporter
+    pid: host
+    network_mode: host
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    logging: *default-logging
+    deploy:
+      resources:
+        limits:
+          memory: 64m
+
 networks:
   app:
     name: app
